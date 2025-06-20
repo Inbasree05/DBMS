@@ -1,0 +1,63 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-image : url("way.jpeg");
+    background-repeat : no-repeat;
+    background-size : cover;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input, select, textarea, button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+
+  }
+  img {
+    width : 80px;
+    height  : 70px;
+    margin : 0;
+  }
+  .logo{
+    display: inline-block;
+  }
+  .kongu{
+    margin-left : 75px;
+    margin-bottom : 20px;
+  }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Kebab Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://static.vecteezy.com/system/resources/previews/044/546/066/non_2x/delicious-shawarma-kebab-fast-food-photo.jpeg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .order-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .order-container h2 {
+            font-weight: bold;
+            color: #d35400;
+        }
+        .btn-custom {
+            background-color: #d35400;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 10px;
+        }
+        .btn-custom:hover {
+            background-color: #e67e22;
+        }
+        .form-control {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="order-container">
+            <h2>Kebab Order</h2>
+            <p class="text-muted">Order your delicious kebabs now!</p>
+            <form id="orderForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                    <div class="text-danger" id="nameError"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" id="phone" class="form-control" placeholder="Enter your phone number">
+                    <div class="text-danger" id="phoneError"></div>
+                </div>
+                <div class="mb3">
+                <label for="address" class="form-label">Address:</label>
+            <input type="text" id="address" placeholder="Enter delivery address" class="form-control">
+            <div class="text-danger" id="addressError"></div>
+            </div>
+
+                <div class="mb-3">
+                    <label for="flavor" class="form-label">Select Kebab Flavor</label>
+                    <select id="flavor" class="form-select">
+                        <option value="">-- Choose Flavor --</option>
+                        <option value="Spicy">Spicy - ₹150</option>
+                        <option value="BBQ">BBQ - ₹180</option>
+                        <option value="Cheese">Cheese - ₹200</option>
+                    </select>
+                    <div class="text-danger" id="flavorError"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" min="1" placeholder="Enter quantity">
+                    <div class="text-danger" id="quantityError"></div>
+                </div>
+                <div class="mb-3">
+                    <h5>Total Price: ₹<span id="totalPrice">0</span></h5>
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Place Order Now</button>
+            </form>
+            <div id="successMessage" class="text-success mt-3"></div>
+        </div>
+    </div>
+    
+    <script>
+        const priceList = { "Spicy": 150, "BBQ": 180, "Cheese": 200 };
+        
+        document.getElementById("flavor").addEventListener("change", calculateTotal);
+        document.getElementById("quantity").addEventListener("input", calculateTotal);
+
+        function calculateTotal() {
+            let flavor = document.getElementById("flavor").value;
+            let quantity = parseInt(document.getElementById("quantity").value) || 0;
+            let price = priceList[flavor] || 0;
+            document.getElementById("totalPrice").innerText = price * quantity;
+        }
+
+        document.getElementById("orderForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+            let name = document.getElementById("name").value.trim();
+            let address=document.getElementById("address").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let quantity = document.getElementById("quantity").value.trim();
+            let flavor = document.getElementById("flavor").value.trim();
+            
+            document.getElementById("nameError").innerText = "";
+            document.getElementById("phoneError").innerText = "";
+            document.getElementById("addressError").innerText="";
+            document.getElementById("quantityError").innerText = "";
+            document.getElementById("flavorError").innerText = "";
+            
+            if (name === "") {
+                document.getElementById("nameError").innerText = "Name is required";
+                isValid = false;
+            }
+            if (address === "") {
+                document.getElementById("addressError").innerText = "Address is required";
+                isValid = false;
+            }
+            
+            let phonePattern = /^[0-9]{10}$/;
+            if (!phone.match(phonePattern)) {
+                document.getElementById("phoneError").innerText = "Enter a valid 10-digit phone number";
+                isValid = false;
+            }
+            
+            if (flavor === "") {
+                document.getElementById("flavorError").innerText = "Please select a kebab flavor";
+                isValid = false;
+            }
+            
+            if (quantity === "" || quantity <= 0) {
+                document.getElementById("quantityError").innerText = "Enter a valid quantity";
+                isValid = false;
+            }
+            
+            if (isValid) {
+                let total = priceList[flavor] * quantity;
+                document.getElementById("successMessage").innerHTML = `<strong>🔥 Order placed successfully! Total: ₹${total}. Your delicious kebabs are on the way! 🔥</strong>`;
+                document.getElementById("orderForm").reset();
+                document.getElementById("totalPrice").innerText = "0";
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

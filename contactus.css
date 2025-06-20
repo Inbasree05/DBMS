@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding : 0;
+    font-family: Arieal;
+}
+h1{
+    text-align: center;
+    color:black;
+    font-size: 36px;;
+}
+header {
+   
+  background-image: url('https://t3.ftcdn.net/jpg/02/05/87/60/240_F_205876015_hYYs7ugqoU8QAobSS3TbnGQ92qyS5gEc.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  color: black; 
+  padding: 20px 0; 
+
+
+text-align: center;
+background-color:white;
+padding: 15px 0;
+}
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    
+    padding: 10px 0;
+    
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    transition: color 0.3s;
+    
+}
+
+nav ul li a:hover {
+    color: white;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; 
+    margin: 0;
+    padding: 0;
+  }
+  
+  .contact-form {
+    max-width: 500px;
+    margin: 55px auto; 
+    padding: 25px;
+    background-color: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333; 
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px; 
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 16px;
+  }
+  
+  button {
+    width: 100%; 
+    padding: 12px;
+    background-color: #4CAF50; 
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+  button:hover {
+    background-color: #45a049; 
+  }
+  

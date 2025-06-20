@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Food Paradise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center">Review Your Order</h2>
+
+        <!-- Order Summary -->
+        <div id="order-summary">
+            <h4 class="mb-3">Order Summary</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="order-items">
+                    <!-- Items will be dynamically loaded here -->
+                </tbody>
+            </table>
+            <h3 class="text-end">Total: $<span id="total-price">0.00</span></h3>
+        </div>
+
+        <!-- Checkout Form -->
+        <form id="orderForm" method="POST" action="http://localhost:3000/order">
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name:</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input type="text" class="form-control" name="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Delivery Address:</label>
+                <textarea class="form-control" name="address" required></textarea>
+            </div>
+            <input type="hidden" name="cartData" id="cartData">
+            <button type="submit" class="btn btn-success w-100">Place Order</button>
+        </form>
+
+        <!-- Navigation to Order History -->
+        <div class="text-center mt-4">
+            <button class="btn btn-primary" onclick="navigateToOrders()">View Order History</button>
+        </div>
+    </div>
+
+    <script>
+        // Load Cart Data
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('checkoutCart')) || [];
+            const orderTable = document.getElementById('order-items');
+            let totalPrice = 0;
+
+            orderTable.innerHTML = '';
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalPrice += itemTotal;
+
+                orderTable.innerHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>$${item.price}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${itemTotal.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+            document.getElementById('cartData').value = JSON.stringify(cart);
+        }
+
+        // Navigate to Orders Page
+        function navigateToOrders() {
+            window.location.href = "orders.html"; // Redirect to orders.html
+        }
+
+        window.onload = loadCart;
+    </script>
+</body>
+</html>

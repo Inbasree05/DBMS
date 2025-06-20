@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Food Paradise Order Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    body {
+      background: url('order.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 30px;
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 70px;
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .item-row select, .item-row input {
+      width: 48%;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(#36454F, #36454F);
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: linear-gradient(to right, #d0b084, #36454F);
+      box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
+    }
+    .bill {
+      margin-top: 30px;
+      background: #36454F;
+      color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+    }
+    .bill h3 {
+      border-bottom: 1px solid #e0cbb4;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .icon-home {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: white;
+      background: #36454F;
+      padding: 10px;
+      border-radius: 50%;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .icon-home:hover {
+      background: #d0b084;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Place Order</h1>
+
+  <form id="orderForm">
+    <label>Name</label>
+    <input type="text" id="name" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>Phone Number</label>
+    <input type="tel" id="phone" required>
+
+    <label>Delivery Address</label>
+    <textarea id="address" required></textarea>
+
+    <label>Custom Message (Optional)</label>
+    <textarea id="customMsg"></textarea>
+
+    <label>Preferred Delivery Date</label>
+    <input type="date" id="deliveryDate" required>
+
+    <label>Select Items and Quantity</label>
+    <div id="itemContainer">
+      <div class="item-row">
+        <select class="item">
+          <option value="" data-price="0">-- Select Item --</option>
+          <option value="Notebook" data-price="50">pizza</option>
+          <option value="Pen" data-price="10">burger ($10)</option>
+          <option value="Pencil" data-price="5">cakes ($20)</option>
+          <option value="Eraser" data-price="3">kebabs ($30)</option>
+          <option value="Marker" data-price="25">chicken burger($25)</option>
+        </select>
+        <input type="number" class="quantity" placeholder="Quantity" min="1">
+      </div>
+    </div>
+
+    <button type="button" onclick="addItemRow()">+ Add Another Item</button>
+
+    <label>Payment Method</label>
+    <input type="radio" name="payment" value="UPI" required> UPI
+    <input type="radio" name="payment" value="Card"> Card
+    <input type="radio" name="payment" value="Cash on Delivery"> Cash on Delivery
+
+    <button type="button" onclick="submitForm()">Place Order</button>
+    <button type="button" onclick="updateOrder()">Update Order</button>
+    <button type="button" onclick="deleteOrder()">Delete Order</button>
+  </form>
+
+  <div class="bill" id="billSummary" style="display:none;">
+    <h3>Order Details</h3>
+    <div id="orderDetails"></div>
+    <p><strong>Total Amount: ₹<span id="totalAmount">0.00</span></strong></p>
+  </div>
+
+  <a href="index.html" class="icon-home">
+    <i class="fa-solid fa-house"></i>
+  </a>
+
+  <script>
+    function addItemRow() {
+      const container = document.getElementById('itemContainer');
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = ` 
+        <select class="item">
+          <option value="" data-price="0">-- Select Item --</option>
+          <option value="Notebook" data-price="50">pizza</option>
+          <option value="Pen" data-price="10">burger ($10)</option>
+          <option value="Pencil" data-price="5">cakes ($20)</option>
+          <option value="Eraser" data-price="3">kebabs ($30)</option>
+          <option value="Marker" data-price="25">chicken burger($25)</option>
+        </select>
+        <input type="number" class="quantity" placeholder="Quantity" min="1">
+      `;
+      container.appendChild(row);
+    }
+
+    async function submitForm() {
+      const items = Array.from(document.querySelectorAll('.item-row')).map(row => ({
+        item: row.querySelector('.item').value,
+        quantity: parseInt(row.querySelector('.quantity').value),
+        price: parseFloat(row.querySelector('.item').selectedOptions[0].getAttribute('data-price')),
+      }));
+
+      const orderData = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        customMsg: document.getElementById('customMsg').value.trim(),
+        deliveryDate: document.getElementById('deliveryDate').value,
+        payment: document.querySelector('input[name="payment"]:checked')?.value,
+        items,
+        totalAmount: items.reduce((sum, item) => sum + item.quantity * item.price, 0),
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData),
+        });
+
+        const result = await response.json();
+        alert('Order placed successfully!');
+
+        // Display order summary
+        displayOrderDetails(orderData);
+
+      } catch (error) {
+        console.error('Error placing order:', error);
+      }
+    }
+
+    async function updateOrder() {
+      const originalOrderId = prompt("Enter the Original Order ID to keep as reference:");
+      if (!originalOrderId) return;
+
+      const items = Array.from(document.querySelectorAll('.item-row')).map(row => ({
+        item: row.querySelector('.item').value,
+        quantity: parseInt(row.querySelector('.quantity').value),
+        price: parseFloat(row.querySelector('.item').selectedOptions[0].getAttribute('data-price')),
+      }));
+
+      const orderData = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        customMsg: document.getElementById('customMsg').value.trim(),
+        deliveryDate: document.getElementById('deliveryDate').value,
+        payment: document.querySelector('input[name="payment"]:checked')?.value,
+        items,
+        totalAmount: items.reduce((sum, item) => sum + item.quantity * item.price, 0),
+        previousOrderId: originalOrderId,  // Store this only for reference
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData),
+        });
+
+        const result = await response.json();
+        alert('New version of order placed successfully!');
+
+        // Display new order details
+        displayOrderDetails(orderData);
+
+      } catch (error) {
+        console.error('Error placing updated order:', error);
+      }
+    }
+
+    function displayOrderDetails(orderData) {
+      document.getElementById('billSummary').style.display = 'block';
+      const details = document.getElementById('orderDetails');
+      details.innerHTML = `
+        <p>Name: ${orderData.name}</p>
+        <p>Email: ${orderData.email}</p>
+        <p>Phone: ${orderData.phone}</p>
+        <p>Address: ${orderData.address}</p>
+        <p>Custom Message: ${orderData.customMsg}</p>
+        <p>Delivery Date: ${orderData.deliveryDate}</p>
+        <p>Payment Method: ${orderData.payment}</p>
+        <p><strong>Items:</strong></p>
+        <ul>
+          ${orderData.items.map(item => `<li>${item.item} - ₹${item.price} x ${item.quantity}</li>`).join('')}
+        </ul>
+      `;
+      document.getElementById('totalAmount').innerText = orderData.totalAmount.toFixed(2);
+    }
+
+    async function deleteOrder() {
+      const orderId = prompt("Enter the Order ID to delete:");
+      if (!orderId) return;
+
+      try {
+        const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+          method: 'DELETE',
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error('Error deleting order:', error);
+      }
+    }
+  </script>
+
+</body>
+</html>

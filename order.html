@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Food Order Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://thumbs.dreamstime.com/b/comfortable-food-day-restaurant-dish-delivery-top-view-free-space-your-text-164636603.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 10px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.93);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #222;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    form {
+      margin-bottom: 35px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.03);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🍽️ Place New Order</h2>
+    <form action="http://localhost:3000/submit-order" method="POST">
+      <input type="text" name="customer_name" placeholder="Customer Name" required>
+      <input type="text" name="mobile_number" placeholder="Mobile Number" required>
+      <input type="text" name="food_item" placeholder="Food Item" required>
+      <input type="number" name="quantity" placeholder="Quantity" required>
+      <button type="submit">Place Order</button>
+    </form>
+
+    <h2>✏️ Update Order</h2>
+    <form id="update-form">
+      <input type="number" id="update-id" placeholder="Order ID to Update" required>
+      <input type="text" id="update-name" placeholder="New Customer Name" required>
+      <input type="text" id="update-phone" placeholder="New Mobile Number" required>
+      <input type="text" id="update-item" placeholder="New Food Item" required>
+      <input type="number" id="update-qty" placeholder="New Quantity" required>
+      <button type="button" onclick="updateOrder()">Update Order</button>
+    </form>
+
+    <h2>🗑️ Delete Order</h2>
+    <form id="delete-form">
+      <input type="number" id="delete-id" placeholder="Order ID to Delete" required>
+      <button type="button" onclick="deleteOrder()">Delete Order</button>
+    </form>
+  </div>
+
+  <script>
+    function updateOrder() {
+      const id = document.getElementById('update-id').value;
+      const data = {
+        customer_name: document.getElementById('update-name').value,
+        mobile_number: document.getElementById('update-phone').value,
+        food_item: document.getElementById('update-item').value,
+        quantity: document.getElementById('update-qty').value,
+      };
+
+      fetch(`http://localhost:3000/update-order/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => alert('Update failed: ' + err.message));
+    }
+
+    function deleteOrder() {
+      const id = document.getElementById('delete-id').value;
+
+      fetch(`http://localhost:3000/delete-order/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => alert('Delete failed: ' + err.message));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Orders</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 5px;
+            width: 100%;
+        }
+        button {
+            padding: 5px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Orders</h1>
+    <table id="orders-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Items</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Orders will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch orders from the backend and display them in the table
+        async function fetchOrders() {
+            const response = await fetch('http://localhost:5000/api/checkouts');
+            const orders = await response.json();
+            const tableBody = document.querySelector('#orders-table tbody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order._id}</td>
+                    <td><input type="text" value="${order.name}" onchange="updateOrderName('${order._id}', this.value)" /></td>
+                    <td>${order.email}</td>
+                    <td>${order.items.map(item => item.itemId).join(', ')}</td>
+                    <td><input type="number" value="${order.totalAmount}" onchange="updateOrderAmount('${order._id}', this.value)" /></td>
+                    <td>
+                        <button onclick="deleteOrder('${order._id}')">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Update order name
+        async function updateOrderName(orderId, newName) {
+            const response = await fetch(`http://localhost:5000/api/checkout/${orderId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newName })
+            });
+            const updatedOrder = await response.json();
+            console.log(updatedOrder);
+        }
+
+        // Update total amount
+        async function updateOrderAmount(orderId, newAmount) {
+            const response = await fetch(`http://localhost:5000/api/checkout/${orderId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ totalAmount: newAmount })
+            });
+            const updatedOrder = await response.json();
+            console.log(updatedOrder);
+        }
+
+        // Delete order
+        async function deleteOrder(orderId) {
+            const response = await fetch(`http://localhost:5000/api/checkout/${orderId}`, {
+                method: 'DELETE',
+            });
+            const result = await response.json();
+            if (result.message === 'Checkout deleted successfully') {
+                fetchOrders(); // Refresh the list
+            }
+        }
+
+        // Load the orders when the page loads
+        window.onload = fetchOrders;
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Burger Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card p-4 shadow-lg">
+            <h2 class="text-center text-primary">🍔 Burger Order</h2>
+            <form id="burgerForm">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control">
+                    <div class="text-danger" id="nameError"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" id="phone" class="form-control">
+                    <div class="text-danger" id="phoneError"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Choose Burger</label>
+                    <select id="burger" class="form-select">
+                        <option value="">-- Select --</option>
+                        <option value="Classic">Classic - ₹100</option>
+                        <option value="Cheese">Cheese - ₹120</option>
+                        <option value="BBQ">BBQ - ₹150</option>
+                    </select>
+                    <div class="text-danger" id="burgerError"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" min="1">
+                    <div class="text-danger" id="quantityError"></div>
+                </div>
+                <h5>Total Price: ₹<span id="totalPrice">0</span></h5>
+                <button type="submit" class="btn btn-primary w-100">Order Now</button>
+            </form>
+            <div id="successMessage" class="text-success mt-3"></div>
+        </div>
+    </div>
+    
+    <script>
+        const priceList = { "Classic": 100, "Cheese": 120, "BBQ": 150 };
+        document.getElementById("burger").addEventListener("change", calculateTotal);
+        document.getElementById("quantity").addEventListener("input", calculateTotal);
+        
+        function calculateTotal() {
+            let burger = document.getElementById("burger").value;
+            let quantity = parseInt(document.getElementById("quantity").value) || 0;
+            let price = priceList[burger] || 0;
+            document.getElementById("totalPrice").innerText = price * quantity;
+        }
+        
+        document.getElementById("burgerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+            let name = document.getElementById("name").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let burger = document.getElementById("burger").value;
+            let quantity = document.getElementById("quantity").value;
+            
+            document.getElementById("nameError").innerText = name ? "" : "Name is required";
+            document.getElementById("phoneError").innerText = phone.match(/^[0-9]{10}$/) ? "" : "Enter valid 10-digit phone number";
+            document.getElementById("burgerError").innerText = burger ? "" : "Select a burger";
+            document.getElementById("quantityError").innerText = quantity > 0 ? "" : "Enter valid quantity";
+            
+            if (!name || !phone.match(/^[0-9]{10}$/) || !burger || quantity <= 0) isValid = false;
+            
+            if (isValid) {
+                let total = priceList[burger] * quantity;
+                document.getElementById("successMessage").innerHTML = `✅ Order placed! Total: ₹${total}`;
+                document.getElementById("burgerForm").reset();
+                document.getElementById("totalPrice").innerText = "0";
+            }
+        });
+    </script>
+</body>
+</html>

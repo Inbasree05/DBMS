@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizza Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            background-image: url('https://img.freepik.com/free-photo/people-taking-photos-food_23-2149303524.jpg'); 
+     background-size: cover;
+     background-position: center; 
+     background-repeat: no-repeat; 
+     background-attachment: fixed; 
+     background-color: #f9f9f9; 
+        }
+        .container {
+            width: 40%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .toppings {
+            display: flex;
+            /*flex-direction: column;*/
+            gap: 1px;
+        }
+        .topping-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+        button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #e74c3c;
+        }
+    </style>
+    <script>
+        function calculatePrice() {
+            let sizePrice = {
+                "Small": 5,
+                "Medium": 8,
+                "Large": 12
+            };
+            let toppingPrice = 1; // Each topping costs $1
+            let selectedSize = document.getElementById("size").value;
+            let selectedToppings = document.querySelectorAll("input[name='toppings']:checked");
+            let totalPrice = sizePrice[selectedSize] + (selectedToppings.length * toppingPrice);
+            document.getElementById("total").innerHTML = "Total Price: $" + totalPrice;
+        }
+
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let address = document.getElementById("address").value;
+            if (name == "" || address == "") {
+                alert("Please fill in all details before ordering.");
+                return false;
+            }
+            alert("Order placed successfully!");
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2 style="text-align: center;">Pizza Order Form</h2>
+        <form onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Enter delivery address">
+
+            <label for="size">Pizza Size:</label>
+            <select id="size" onchange="calculatePrice()">
+                <option value="Small">Small - $5</option>
+                <option value="Medium">Medium - $8</option>
+                <option value="Large">Large - $12</option>
+            </select>
+
+            <label style="font-weight: bold;">Toppings:</label>
+            <div class="toppings">
+                <div class="topping-item">
+                    <input type="checkbox" name="toppings" value="Cheese" onchange="calculatePrice()">
+                    <span>Cheese</span>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" name="toppings" value="Pepperoni" onchange="calculatePrice()">
+                    <span>Pepperoni</span>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" name="toppings" value="Mushrooms" onchange="calculatePrice()">
+                    <span>Mushrooms</span>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" name="toppings" value="Olives" onchange="calculatePrice()">
+                    <span>Olives</span>
+                </div>
+            </div>
+
+            <p class="price" id="total">Total Price: $5</p>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie Place</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+
+  h1 {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+  }
+
+  .item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .item img:hover {
+    transform: scale(1.05);
+  }
+
+  .item button {
+    padding: 10px 30px;
+    border: none;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 10px;
+    transition: 0.3s;
+  }
+
+  .item button:hover {
+    background-color: darkgreen;
+    transform: scale(1.1);
+  }
+
+  .carousel-inner img {
+    max-height: 400px;
+    object-fit: cover;
+  }
+  header {
+          
+   
+          background-image: url('https://t4.ftcdn.net/jpg/04/43/37/07/360_F_443370711_sqHRnSIQovW6uyQ5ZwDpd4kjCG8Q6swm.jpg'); /* Replace 'your-image.jpg' with your image path */
+          background-size: cover; 
+          background-position: center;
+          color: white; 
+          padding: 20px 0; 
+        
+        
+       text-align: center;
+       background-color:white;
+       padding: 15px 0;
+       
+                   padding: 15px 0;
+               }
+  /*header {
+   
+   background-image: url('https://st3.depositphotos.com/28657910/37492/i/600/depositphotos_374926126-stock-illustration-petrol-colored-wall-texture-background.jpg'); /* Replace 'your-image.jpg' with your image path */
+   /*background-size: cover; /* Ensures the image covers the entire header */
+   /*background-position: center; /* Centers the image */
+   /*color: black; /* Makes the text more readable */
+   /*padding: 20px 0; /* Adds padding to the header */
+ /*
+ 
+text-align: center;
+background-color:white;
+padding: 15px 0;
+}
+*/
+/*header{
+  background-color:green;
+}*/
+
+body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: #333;
+          
+     
+     background-image: url('https://i.pinimg.com/474x/c1/3c/46/c13c46e5db3a7dd45a15d76d49e5f50c.jpg'); 
+     background-size: cover;
+     background-position: center; 
+     background-repeat: no-repeat; 
+     background-attachment: fixed; 
+     background-color: #f9f9f9; 
+ 
+        }
+        .order-btn {
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 18px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+</style>
+
+<body>
+  <header>
+   
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="#" style="color: white;">Food Paradise</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="color: white;">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html" style="color: white;">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html" style="color: white;">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="card.html" style="color:white">Cart</a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html" style="color:white">login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <main class="container my-5">
+    <h1>Welcome to Food Paradise</h1>
+    <form class="d-flex ms-3">
+      <input class="form-control border_dark me-2" type="search" placeholder="Search for food..." aria-label="Search">
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <br>
+  
+    <section class="row g-4">
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="pizza.jpg" alt="Pizza" class="img-fluid rounded">
+          <h4>Pizza</h4>
+          <button><a href="addpizza.html" class="order-btn">view</a></button>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="kebabs.jpg" alt="Kebabs" class="img-fluid rounded">
+          <h4>Kebabs</h4>
+          <button><a href="addkebabas.html" class="order-btn">view</a></button>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="burger.jpg" alt="Burger" class="img-fluid rounded">
+          <h4>Burger</h4>
+          <button><a href="burgers.html" class="order-btn">view</a></button>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="pasta.jpg" alt="Pasta" class="img-fluid rounded">
+          <h4>Pasta</h4>
+          <button>Order</button>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="cake.jpg" alt="Cake" class="img-fluid rounded">
+          <h4>Cake</h4>
+          <button>Order</button>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="item text-center">
+          <img src="biriyani.jpg" alt="Hyderabad Biriyani" class="img-fluid rounded">
+          <h4>Hyderabad Biriyani</h4>
+          <button>Order</button>
+        </div>
+      </div>
+    </section>
+
+ 
+    <div class="table-responsive my-5">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>Dish</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr>
+            <td>Pizza</td>
+            <td><span class="badge bg-primary rounded pill">$10</span></td>
+          </tr>
+          <tr>
+            <td>Kebabs</td>
+            <td><span class="badge bg-primary rounded-pill">$12</span></td>
+          </tr>
+          <tr>
+            <td>Burger</td>
+            <td><span class="badge bg-primary rounded-pill">$8</span></td>
+          </tr>
+          <tr>
+            <td>Pasta</td>
+            <td><span class="badge bg-primary rounded-pill">$9</span></td>
+          </tr>
+          <tr>
+            <td>Cake</td>
+            <td><span class="badge bg-primary rounded-pill">$6</span></td>
+          </tr>
+          <tr>
+            <td>Hyderabad Biriyani</td>
+            <td><span class="badge bg-primary rounded-pill">$14</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+    <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+      </div>
+      <div class="carousel-inner h-100">
+        <div class="carousel-item active">
+          <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+          <img src="https://i.pinimg.com/474x/f2/c6/40/f2c640f36a78fe9b9e8e88a001250b91.jpg" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+          <img src="https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/news15137.jpg" class="d-block w-100">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </main>
+  <center>
+    
+ <div class="container my-5">
+  <div class="row">
+      
+      <div class="col-md-4 text-center">
+          <video width="100%" controls>
+              <source src="Pinterest Media  .mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+      </div>
+      
+      <div class="col-md-4 text-center">
+          <video width="100%" controls>
+              <source src="Pinterest media.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+      </div>
+    
+      <div class="col-md-4 text-center">
+          <video width="100%" controls>
+              <source src="Pinterest media (1).mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+      </div>
+  </div>
+</div>
+
+
+ </center>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            text-align: left;
+        }
+        .toppings {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 10px;
+        }
+        .topping-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+        button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 style="text-align: center;">Pizza Order Form</h2>
+
+        <label style="font-weight: bold;">Toppings:</label>
+        <div class="toppings">
+            <div class="topping-item">
+                <input type="checkbox" name="toppings" value="Cheese">
+                <span>Cheese</span>
+            </div>
+            <div class="topping-item">
+                <input type="checkbox" name="toppings" value="Pepperoni">
+                <span>Pepperoni</span>
+            </div>
+            <div class="topping-item">
+                <input type="checkbox" name="toppings" value="Mushrooms">
+                <span>Mushrooms</span>
+            </div>
+            <div class="topping-item">
+                <input type="checkbox" name="toppings" value="Olives">
+                <span>Olives</span>
+            </div>
+        </div>
+
+        <p class="price" id="total">Total Price: $5</p>
+
+        <button type="submit">Place Order</button>
+    </div>
+
+</body>
+</html>
